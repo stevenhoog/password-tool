@@ -21,3 +21,4 @@ Route::get('/', function () {
 Auth::Routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
