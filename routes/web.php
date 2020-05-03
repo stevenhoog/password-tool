@@ -17,9 +17,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+// Disable register route
+Auth::Routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Disable register route
-Auth::Routes(['register' => false]);
