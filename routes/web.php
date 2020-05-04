@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Return index view provided by GroupsController
+Route::get('/', 'GroupsController@index');
 
 // Disable register route
 Auth::Routes(['register' => false]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Return view for creating a group
+Route::get('/group', 'GroupsController@add');
+// Make post request for creating a group
+Route::post('/group', 'GroupsController@create');
 
