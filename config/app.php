@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Password Tool'),
+    'name' => env('APP_NAME', 'PasswordTool'),
 
     /*
     |--------------------------------------------------------------------------
