@@ -14,7 +14,7 @@ class AddCreatedByToGroups extends Migration
     public function up()
     {
         Schema::table('groups', function (Blueprint $table) {
-            //
+            $table->integer('created_by')->unsigned()->index();
         });
     }
 
@@ -26,7 +26,7 @@ class AddCreatedByToGroups extends Migration
     public function down()
     {
         Schema::table('groups', function (Blueprint $table) {
-            //
+            $table->dropColumn(['created_by']);
         });
     }
 }
