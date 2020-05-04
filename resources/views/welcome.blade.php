@@ -15,6 +15,7 @@
                         @endif
 
                         You are logged in!
+                         <a href="/group" class="btn btn-primary">Add new Group</a>
                     </div>
                 @else
                     <div class="card-header">Login</div>
