@@ -5,17 +5,34 @@
         <div class="col-md-8">
             <div class="card">
                 @auth
-                    <div class="card-header">Profile</div>
+                    <div class="card-header">Groups list</div>
 
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        You are logged in!
-                         <a href="/group" class="btn btn-primary">Add new Group</a>
+                        <a href="/group" class="btn btn-primary">Add new Group</a>
+                        <table class="table">
+                             <thead>
+                                <tr>
+                                    <th scope="col">Groups</th>
+                                </tr>
+                             </thead>
+                             <tbody>
+                                @foreach($user->groups as $group)
+                                <tr>
+                                    <td>
+                                        <h2>{{$group->name}}</h2>
+                                        <span>{{$group->description}}</span>
+                                    </td>
+                                    <td>
+                                        <form action="/group/{{$group->id}}">
+                                            <button type="submit" name="edit" class="btn-sm btn-outline-primary">Edit</button>
+                                            <button type="submit" name="delete" formmethod="post" class="btn-sm btn-outline-danger">Delete</button>
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                             </tbody>
+                        </table>
                     </div>
                 @else
                     <div class="card-header">Login</div>

@@ -10,7 +10,8 @@ class GroupsController extends Controller
 {
     public function index()
     {
-    	return view('welcome');
+        $user = Auth::user();
+    	return view('welcome', compact('user'));
     }
 
     // Go to view to add a new group
