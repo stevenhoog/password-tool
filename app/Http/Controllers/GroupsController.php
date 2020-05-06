@@ -26,7 +26,7 @@ class GroupsController extends Controller
     	$group = new Group();
     	$group->name = $request->name;
     	$group->description = $request->description;
-    	$group->created_by = Auth::id();
+    	$group->user_id = Auth::id();
     	$group->save();
     	return redirect('/');
     }

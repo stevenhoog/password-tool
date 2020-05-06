@@ -14,7 +14,7 @@ class ChangeCreatedByColumnName extends Migration
     public function up()
     {
         Schema::table('groups', function (Blueprint $table) {
-            //
+            $table->renameColumn('created_by', 'user_id');
         });
     }
 
