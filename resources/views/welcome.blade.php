@@ -9,17 +9,17 @@
 
                     <div class="card-body">
                         <a href="/group" class="btn btn-primary">Add new Group</a>
-                        <table class="table">
+                        <table class="table mt-4">
                              <thead>
                                 <tr>
-                                    <th scope="col">Groups</th>
+                                    <th colspan="2" scope="col">Groups</th>
                                 </tr>
                              </thead>
                              <tbody>
                                 @foreach($user->groups as $group)
                                 <tr>
                                     <td>
-                                        <h2>{{$group->name}}</h2>
+                                        <h4>{{$group->name}}</h4>
                                         <span>{{$group->description}}</span>
                                     </td>
                                     <td>
