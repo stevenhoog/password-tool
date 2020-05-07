@@ -12,7 +12,7 @@
                         <table class="table mt-4">
                              <thead>
                                 <tr>
-                                    <th colspan="2" scope="col">Groups</th>
+                                    <th colspan="2" scope="col" class="border-top-0">Groups</th>
                                 </tr>
                              </thead>
                              <tbody>
