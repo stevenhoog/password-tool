@@ -22,7 +22,7 @@
                                         <h4>{{$group->name}}</h4>
                                         <span>{{$group->description}}</span>
                                     </td>
-                                    <td>
+                                    <td class="align-middle">
                                         <form action="/group/{{$group->id}}">
                                             <button type="submit" name="edit" class="btn-sm btn-outline-primary">Edit</button>
                                             <button type="submit" name="delete" formmethod="post" class="btn-sm btn-outline-danger">Delete</button>
