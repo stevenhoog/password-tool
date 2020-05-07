@@ -17,7 +17,7 @@
                         </div>
                         <div class="form-group">
                             <label for="users">Add a user to this group</label>
-                            <select name="users" class="form-control">
+                            <select name="users" class="form-control" multiple>
                                 @foreach($users as $user)
                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
