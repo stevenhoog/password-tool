@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Group;
 
@@ -39,7 +40,9 @@ class GroupsController extends Controller
         // Only the user that created the task can edit it
         if (Auth::user()->id == $group->user_id) 
         {
-            return view('editGroup', compact('group'));
+            // Get a list of all of the application's users
+            $users = DB::table('users')->get();
+            return view('editGroup', compact('group', 'users'));
         } 
         else 
         {
