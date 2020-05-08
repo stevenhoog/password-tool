@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Group;
+use App\Users;
 
 class GroupsController extends Controller
 {
@@ -38,14 +38,11 @@ class GroupsController extends Controller
     {
 
         // Only the user that created the task can edit it
-        if (Auth::user()->id == $group->user_id) 
-        {
+        if (Auth::user()->id == $group->user_id) {
             // Get a list of all of the application's users
-            $users = DB::table('users')->get();
+            $users = Users::all();
             return view('editGroup', compact('group', 'users'));
-        } 
-        else 
-        {
+        } else {
             return redirect(RouteServiceProvider::HOME);
         }
 
@@ -54,16 +51,28 @@ class GroupsController extends Controller
     // Handle post request to update group
     public function update(Request $request, Group $group)
     {
-        if (isset($_POST['delete']))
-        {
+        if (isset($_POST['delete'])) {
             $group->delete();
             return redirect(RouteServiceProvider::HOME);
-        }
-        else 
-        {
+
+        } else {
+            // Update group
             $group->name = $request->name;
             $group->description = $request->description;
             $group->save();
+
+            // Add group to user model
+            if ($request->has('users')) {
+
+                foreach($request->users as $userSelect) {
+                    // Retrieve user model by its primary key
+                    $user = Users::find($userSelect);
+                    
+                    $user->group = $group->id;
+                    $user->save();
+                }
+            }
+
             return redirect(RouteServiceProvider::HOME);
         }
     }
