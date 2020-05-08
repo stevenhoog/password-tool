@@ -10,7 +10,29 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <!-- App.js loads jQuery v3.5.0 -->
+    <script type="text/javascript">
+        // Use multiple versions of jQuery on same page
+        var jq350 = $.noConflict(true);
+    </script>
+
+    <!-- jQuery 2.x is needed for Bootstrap Multiselect plugin -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- Include the Bootstrap Multiselect CSS and JS: -->
+    <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-multiselect.css') }}" type="text/css"/>
+
+    <script type="text/javascript">
+        // Use multiple versions of jQuery on same page
+        var jq224 = $.noConflict(true);
+
+        // Apply Bootstrap Multiselect plugin on all multiselect dropdown lists
+        jq224(document).ready(function() {
+            jq224('select[multiple]').multiselect();
+        });
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
