@@ -10,6 +10,13 @@ use App\Users;
 
 class GroupsController extends Controller
 {
+
+    // Only authenticated users have access to the groups
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $user = Auth::user();
