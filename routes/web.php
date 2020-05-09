@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Return index view provided by GroupsController
-Route::get('/', 'GroupsController@index');
+Route::get('/', 'GroupsController@index')->name('index');
 
 // Disable register route
 Auth::Routes(['register' => false]);
