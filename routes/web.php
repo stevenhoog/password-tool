@@ -29,3 +29,6 @@ Route::get('/group/{group}', 'GroupsController@edit');
 // Make post request for editing/deleting a group
 Route::post('/group/{group}', 'GroupsController@update');
 
+// Return profile view
+Route::get('/profile', 'ProfileController@show')->name('profile');
+
