@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-header">Profile</div>
                 <div class="card-body">
-                	<form method="post" action="/profile/{{ $user->id }}">
+                	<form method="post" action="/profile">
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" name="name" value="{{ $user->name }}" class="form-control">
