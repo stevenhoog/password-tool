@@ -17,7 +17,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" name="password" value="{{ $user->password }}" class="form-control">
+                            <input type="password" name="password" value="{{ $password }}" class="form-control">
                         </div>
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary">Change Profile</button>

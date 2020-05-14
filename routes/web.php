@@ -32,6 +32,6 @@ Route::post('/group/{group}', 'GroupsController@update');
 // Return profile view
 Route::get('/profile', 'ProfileController@show')->name('profile');
 
-// Make post request for editing the users profile
+// Make post request for editing the user's profile
 Route::post('/profile', 'ProfileController@update');
 

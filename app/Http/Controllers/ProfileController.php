@@ -18,7 +18,15 @@ class ProfileController extends Controller
     public function show()
     {
     	$user = Auth::user();
-    	return view('profile', compact('user'));
+
+        // Decrypt password to show it in the profile view 
+        try {
+            $password = decrypt($user->password);
+        } catch (DecryptException $e) {
+            //
+        }
+
+    	return view('profile', compact('user', 'password'));
     }
 
     public function update(Request $request)
@@ -32,7 +40,7 @@ class ProfileController extends Controller
         $user->email = $request->email;
 
         // Encrypt user's password 
-        $user->password = encrypt($request->secret);
+        $user->password = encrypt($request->password);
         $user->save();
 
         return redirect(RouteServiceProvider::HOME);
