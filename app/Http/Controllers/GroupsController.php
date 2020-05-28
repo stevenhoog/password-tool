@@ -23,14 +23,14 @@ class GroupsController extends Controller
     	return view('welcome', compact('user'));
     }
 
-    // Go to view to add a new group
-    public function add()
+    // Return view to add a new group
+    public function create()
     {
     	return view('addGroup');
     }
 
     // Handle post request to create new group
-    public function create(Request $request)
+    public function store(Request $request)
     {
     	$group = new Group();
     	$group->name = $request->name;
@@ -40,11 +40,11 @@ class GroupsController extends Controller
     	return redirect(RouteServiceProvider::HOME);
     }
 
-    // Go to view to edit a group
+    // Return view to edit a group
     public function edit(Group $group) 
     {
 
-        // Only the user that created the task can edit it
+        // Only the user that created the group can edit it
         if (Auth::user()->id == $group->user_id) {
             // Get a list of all of the application's users
             $users = Users::all();
@@ -59,8 +59,8 @@ class GroupsController extends Controller
     public function update(Request $request, Group $group)
     {
         if (isset($_POST['delete'])) {
-            $group->delete();
-            return redirect(RouteServiceProvider::HOME);
+
+            $this->destroy($group);
 
         } else {
             // Update group
@@ -80,7 +80,17 @@ class GroupsController extends Controller
                 }
             }
 
-            return redirect(RouteServiceProvider::HOME);
+        }
+        
+        return redirect(RouteServiceProvider::HOME);
+    }
+
+    // Delete group
+    public function destroy(Group $group)
+    {
+         // Only the user that created the group can delete it
+        if (Auth::user()->id == $group->user_id) {
+            $group->delete();
         }
     }
 

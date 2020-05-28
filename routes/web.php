@@ -20,9 +20,9 @@ Route::get('/', 'GroupsController@index');
 Auth::Routes(['register' => false]);
 
 // Return view for creating a group
-Route::get('/group', 'GroupsController@add');
+Route::get('/group', 'GroupsController@create');
 // Make post request for creating a group
-Route::post('/group', 'GroupsController@create');
+Route::post('/group', 'GroupsController@store');
 
 // Return view for editing a group
 Route::get('/group/{group}', 'GroupsController@edit');
