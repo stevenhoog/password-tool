@@ -7,7 +7,7 @@
                     <div class="card-header">Groups list</div>
 
                     <div class="card-body">
-                        <a href="/group" class="btn btn-primary">Add new Group</a>
+                        <a href="{{ route('group.create') }}" class="btn btn-primary">Add new Group</a>
                         <table class="table mt-4">
                              <thead>
                                 <tr>
@@ -22,8 +22,7 @@
                                         <span>{{$group->description}}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <form action="/group/{{$group->id}}" class="d-inline">
-                                            @method('PUT')
+                                        <form action="/group/{{$group->id}}/edit" class="d-inline">
                                             <button type="submit" name="edit" class="btn-sm btn-outline-primary">Edit</button>
                                             {{ csrf_field() }}
                                         </form>
