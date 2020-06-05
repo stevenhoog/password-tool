@@ -22,12 +22,12 @@
                                         <span>{{$group->description}}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <form action="/group/{{$group->id}}">
+                                        <form action="/group/{{$group->id}}" class="d-inline">
                                             @method('PUT')
                                             <button type="submit" name="edit" class="btn-sm btn-outline-primary">Edit</button>
                                             {{ csrf_field() }}
                                         </form>
-                                        <form action="/group/{{$group->id}}">
+                                        <form action="/group/{{$group->id}}" class="d-inline">
                                              @method('DELETE')
                                             <button type="submit" name="delete" formmethod="post" class="btn-sm btn-outline-danger">Delete</button>
                                             {{ csrf_field() }}
