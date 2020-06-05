@@ -58,28 +58,21 @@ class GroupsController extends Controller
     // Handle post request to update group
     public function update(Request $request, Group $group)
     {
-        if (isset($_POST['delete'])) {
+        // Update group
+        $group->name = $request->name;
+        $group->description = $request->description;
+        $group->save();
 
-            $this->destroy($group);
+        // Add group to user model
+        if ($request->has('users')) {
 
-        } else {
-            // Update group
-            $group->name = $request->name;
-            $group->description = $request->description;
-            $group->save();
-
-            // Add group to user model
-            if ($request->has('users')) {
-
-                foreach($request->users as $userSelect) {
-                    // Retrieve user model by its primary key
-                    $user = Users::find($userSelect);
-                    
-                    $user->group = $group->id;
-                    $user->save();
-                }
+            foreach($request->users as $userSelect) {
+                // Retrieve user model by its primary key
+                $user = Users::find($userSelect);
+                
+                $user->group = $group->id;
+                $user->save();
             }
-
         }
         
         return redirect(RouteServiceProvider::HOME);

@@ -4,7 +4,6 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                @auth
                     <div class="card-header">Groups list</div>
 
                     <div class="card-body">
@@ -24,7 +23,12 @@
                                     </td>
                                     <td class="align-middle">
                                         <form action="/group/{{$group->id}}">
+                                            @method('PUT')
                                             <button type="submit" name="edit" class="btn-sm btn-outline-primary">Edit</button>
+                                            {{ csrf_field() }}
+                                        </form>
+                                        <form action="/group/{{$group->id}}">
+                                             @method('DELETE')
                                             <button type="submit" name="delete" formmethod="post" class="btn-sm btn-outline-danger">Delete</button>
                                             {{ csrf_field() }}
                                         </form>
@@ -34,14 +38,6 @@
                              </tbody>
                         </table>
                     </div>
-                @else
-                    <div class="card-header">Login</div>
-
-                    <div class="card-body">
-                        <h3>You need to log in. <a href="/login" title="Login">Click here to login</a></h3>
-                    </div>
-                @endauth
-
             </div>
         </div>
     </div>
