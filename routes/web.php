@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Return index view provided by GroupsController
+Route::get('/', 'GroupsController@index');
+
 // Create CRUD routes
-Route::resource('group', 'GroupsController');
+Route::resource('group', 'GroupsController')->except(['index']);
+
 
 // Disable register route
 Auth::Routes(['register' => false]);
