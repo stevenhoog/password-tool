@@ -7,6 +7,7 @@
                 <div class="card-header">Edit the Group</div>
                 <div class="card-body">
                     <form method="post" action="/group/{{ $group->id }}">
+                        @method('PUT')
                         <div class="form-group">
                             <label for="users">Users added to this group</label>
                             <select name="users[]" class="form-control" multiple>

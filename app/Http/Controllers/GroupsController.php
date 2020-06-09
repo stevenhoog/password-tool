@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Auth;
 use App\Group;
-use App\Users;
+use App\User;
 
 class GroupsController extends Controller
 {
@@ -48,7 +48,7 @@ class GroupsController extends Controller
         // Only the user that created the group can edit it
         if (Auth::user()->id == $group->user_id) {
             // Get a list of all of the application's users
-            $users = Users::all();
+            $users = User::all();
             return view('editGroup', compact('group', 'users'));
         } else {
             return redirect(RouteServiceProvider::HOME);
@@ -69,7 +69,7 @@ class GroupsController extends Controller
 
             foreach($request->users as $userSelect) {
                 // Retrieve user model by its primary key
-                $user = Users::find($userSelect);
+                $user = User::find($userSelect);
                 
                 $user->group = $group->id;
                 $user->save();
@@ -86,6 +86,8 @@ class GroupsController extends Controller
         if (Auth::user()->id == $group->user_id) {
             $group->delete();
         }
+
+        return redirect(RouteServiceProvider::HOME);
     }
 
 }
