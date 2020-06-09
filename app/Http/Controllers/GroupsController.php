@@ -32,11 +32,12 @@ class GroupsController extends Controller
     // Handle post request to create new group
     public function store(Request $request)
     {
-    	$group = new Group();
-    	$group->name = $request->name;
-    	$group->description = $request->description;
-    	$group->user_id = Auth::id();
-    	$group->save();
+        // Create group in relation to the user model
+        $group = Auth::user()->groups()->create([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
     	return redirect(RouteServiceProvider::HOME);
     }
 
