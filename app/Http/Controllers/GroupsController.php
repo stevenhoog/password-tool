@@ -19,8 +19,8 @@ class GroupsController extends Controller
 
     public function index()
     {
-        $user = Auth::user();
-    	return view('welcome', compact('user'));
+        $groups = Auth::user()->groups;
+    	return view('welcome', compact('groups'));
     }
 
     // Return view to add a new group

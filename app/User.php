@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Group;
+use App\Login;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,5 +42,10 @@ class User extends Authenticatable
     public function groups()
     {
         return $this->hasMany(Group::class);
+    }
+
+    public function logins()
+    {
+        return $this->hasMany(Login::class);
     }
 }

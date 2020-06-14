@@ -16,16 +16,15 @@ use Illuminate\Support\Facades\Route;
 // Return index view provided by GroupsController
 Route::get('/', 'GroupsController@index')->name('index');
 
-// Create CRUD routes
+// Create CRUD routes for group
 Route::resource('group', 'GroupsController')->except(['index']);
-
 
 // Disable register route
 Auth::Routes(['register' => false]);
 
-// Return profile view
-Route::get('/profile', 'ProfileController@show')->name('profile');
+// Create CRUD routes for login credentials
+Route::resource('logins', 'LoginsController')->except(['index']);
 
-// Make post request for editing the user's profile
-Route::post('/profile', 'ProfileController@update');
+// Return profile page with login credentials
+Route::get('/profile', 'LoginsController@index')->name('profile');
 

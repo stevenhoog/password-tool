@@ -8,6 +8,8 @@
 
                     <div class="card-body">
                         <a href="{{ route('group.create') }}" class="btn btn-primary">Add new Group</a>
+
+                        @if(!$groups->isEmpty())
                         <table class="table mt-4">
                              <thead>
                                 <tr>
@@ -15,7 +17,7 @@
                                 </tr>
                              </thead>
                              <tbody>
-                                @foreach($user->groups as $group)
+                                @foreach($groups as $group)
                                 <tr>
                                     <td>
                                         <h4>{{$group->name}}</h4>
@@ -23,12 +25,12 @@
                                     </td>
                                     <td class="align-middle">
                                         <form action="/group/{{$group->id}}/edit" class="d-inline">
-                                            <button type="submit" name="edit" class="btn-sm btn-outline-primary">Edit</button>
+                                             <button type="submit" name="edit" title="Edit" class="btn btn-sm btn-outline-primary"><span class="fa fa-edit fa-lg" aria-hidden="true"></span></button>
                                             {{ csrf_field() }}
                                         </form>
-                                        <form action="/group/{{$group->id}}" class="d-inline">
+                                        <form method="post" action="/group/{{$group->id}}" class="d-inline">
                                              @method('DELETE')
-                                            <button type="submit" name="delete" formmethod="post" class="btn-sm btn-outline-danger">Delete</button>
+                                             <button type="submit" name="delete" title="Delete" class="btn btn-sm btn-outline-danger"><span class="fa fa-trash-o fa-lg" aria-hidden="true"></span></button>
                                             {{ csrf_field() }}
                                         </form>
                                     </td>
@@ -36,6 +38,7 @@
                                 @endforeach
                              </tbody>
                         </table>
+                        @endif
                     </div>
             </div>
         </div>

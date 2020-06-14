@@ -28,11 +28,29 @@
         // Use multiple versions of jQuery on same page
         var jq224 = $.noConflict(true);
 
-        // Apply Bootstrap Multiselect plugin on all multiselect dropdown lists
-        jq224(document).ready(function() {
+        jq350(document).ready(function() {
+            // Apply Bootstrap Multiselect plugin on all multiselect dropdown lists
             jq224('select[multiple]').multiselect();
+
+
+            // Show/hide password
+            jq350('.showPassword').click(function() {
+                var passwordElement = jq350(this).parent().parent().parent().find('input[name=password]');
+                if (passwordElement.attr('type') == 'password') {
+                    passwordElement.attr('type','text');
+                    jq350(this).find('.fa').addClass('fa-eye-slash').removeClass('fa-eye');
+
+                } else {
+                    passwordElement.attr('type','password');
+                    jq350(this).find('.fa').addClass('fa-eye').removeClass('fa-eye-slash');
+                }
+            });
+
+
         });
     </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
