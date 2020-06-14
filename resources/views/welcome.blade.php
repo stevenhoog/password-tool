@@ -4,11 +4,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                @auth
                     <div class="card-header">Groups list</div>
 
                     <div class="card-body">
-                        <a href="/group" class="btn btn-primary">Add new Group</a>
+                        <a href="{{ route('group.create') }}" class="btn btn-primary">Add new Group</a>
                         <table class="table mt-4">
                              <thead>
                                 <tr>
@@ -23,8 +22,12 @@
                                         <span>{{$group->description}}</span>
                                     </td>
                                     <td class="align-middle">
-                                        <form action="/group/{{$group->id}}">
+                                        <form action="/group/{{$group->id}}/edit" class="d-inline">
                                             <button type="submit" name="edit" class="btn-sm btn-outline-primary">Edit</button>
+                                            {{ csrf_field() }}
+                                        </form>
+                                        <form action="/group/{{$group->id}}" class="d-inline">
+                                             @method('DELETE')
                                             <button type="submit" name="delete" formmethod="post" class="btn-sm btn-outline-danger">Delete</button>
                                             {{ csrf_field() }}
                                         </form>
@@ -34,14 +37,6 @@
                              </tbody>
                         </table>
                     </div>
-                @else
-                    <div class="card-header">Login</div>
-
-                    <div class="card-body">
-                        <h3>You need to log in. <a href="/login" title="Login">Click here to login</a></h3>
-                    </div>
-                @endauth
-
             </div>
         </div>
     </div>

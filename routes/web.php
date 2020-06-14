@@ -16,18 +16,12 @@ use Illuminate\Support\Facades\Route;
 // Return index view provided by GroupsController
 Route::get('/', 'GroupsController@index')->name('index');
 
+// Create CRUD routes
+Route::resource('group', 'GroupsController')->except(['index']);
+
+
 // Disable register route
 Auth::Routes(['register' => false]);
-
-// Return view for creating a group
-Route::get('/group', 'GroupsController@add');
-// Make post request for creating a group
-Route::post('/group', 'GroupsController@create');
-
-// Return view for editing a group
-Route::get('/group/{group}', 'GroupsController@edit');
-// Make post request for editing/deleting a group
-Route::post('/group/{group}', 'GroupsController@update');
 
 // Return profile view
 Route::get('/profile', 'ProfileController@show')->name('profile');

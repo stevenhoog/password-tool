@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Auth;
 use App\Group;
-use App\Users;
+use App\User;
 
 class GroupsController extends Controller
 {
@@ -23,31 +23,32 @@ class GroupsController extends Controller
     	return view('welcome', compact('user'));
     }
 
-    // Go to view to add a new group
-    public function add()
+    // Return view to add a new group
+    public function create()
     {
     	return view('addGroup');
     }
 
     // Handle post request to create new group
-    public function create(Request $request)
+    public function store(Request $request)
     {
-    	$group = new Group();
-    	$group->name = $request->name;
-    	$group->description = $request->description;
-    	$group->user_id = Auth::id();
-    	$group->save();
+        // Create group in relation to the user model
+        $group = Auth::user()->groups()->create([
+            'name' => $request->name,
+            'description' => $request->description
+        ]);
+
     	return redirect(RouteServiceProvider::HOME);
     }
 
-    // Go to view to edit a group
+    // Return view to edit a group
     public function edit(Group $group) 
     {
 
-        // Only the user that created the task can edit it
+        // Only the user that created the group can edit it
         if (Auth::user()->id == $group->user_id) {
             // Get a list of all of the application's users
-            $users = Users::all();
+            $users = User::all();
             return view('editGroup', compact('group', 'users'));
         } else {
             return redirect(RouteServiceProvider::HOME);
@@ -58,30 +59,35 @@ class GroupsController extends Controller
     // Handle post request to update group
     public function update(Request $request, Group $group)
     {
-        if (isset($_POST['delete'])) {
-            $group->delete();
-            return redirect(RouteServiceProvider::HOME);
+        // Update group
+        $group->name = $request->name;
+        $group->description = $request->description;
+        $group->save();
 
-        } else {
-            // Update group
-            $group->name = $request->name;
-            $group->description = $request->description;
-            $group->save();
+        // Add group to user model
+        if ($request->has('users')) {
 
-            // Add group to user model
-            if ($request->has('users')) {
-
-                foreach($request->users as $userSelect) {
-                    // Retrieve user model by its primary key
-                    $user = Users::find($userSelect);
-                    
-                    $user->group = $group->id;
-                    $user->save();
-                }
+            foreach($request->users as $userSelect) {
+                // Retrieve user model by its primary key
+                $user = User::find($userSelect);
+                
+                $user->group = $group->id;
+                $user->save();
             }
-
-            return redirect(RouteServiceProvider::HOME);
         }
+        
+        return redirect(RouteServiceProvider::HOME);
+    }
+
+    // Delete group
+    public function destroy(Group $group)
+    {
+         // Only the user that created the group can delete it
+        if (Auth::user()->id == $group->user_id) {
+            $group->delete();
+        }
+
+        return redirect(RouteServiceProvider::HOME);
     }
 
 }
