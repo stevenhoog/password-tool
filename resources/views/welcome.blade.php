@@ -20,7 +20,7 @@
                                 @foreach($user->groups as $group)
                                 <tr>
                                     <td>
-                                        <h4>{{$group->name}}</h4>
+                                        <h4><a href="group/{{$group->id}}" title="Show group {{$group->name}}">{{$group->name}}</a></h4>
                                         <span>{{$group->description}}</span>
                                     </td>
                                     <td class="align-middle">

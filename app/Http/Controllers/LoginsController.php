@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Auth;
 use App\Login;
+use App\Group;
 
 class LoginsController extends Controller
 {
@@ -32,9 +33,15 @@ class LoginsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('addLogin');
+    public function create(Request $request)
+    {   
+        // Determine if login need to be added to a group
+        $group = [];
+        if ($request->has('group')) {
+            $group = Group::find($request->group);
+        }
+
+        return view('addLogin', compact('group'));
     }
 
     /**
@@ -45,14 +52,28 @@ class LoginsController extends Controller
      */
     public function store(Request $request)
     {
-        // Create login in relation to the user model
-        $login = Auth::user()->logins()->create([
+
+        // Determine if login should be in relation with the group model
+        if ($request->has('group')) {
+            $model = Group::find($request->group);
+        } else {
+            $model = Auth::user();
+        }
+
+
+        // Create login in relation to the user or group model
+        $login = $model->logins()->create([
             'title' => $request->title,
             'username' => $request->username,
             'password' => encrypt($request->password)
         ]);
 
-        return redirect(RouteServiceProvider::PROFILE);
+        // Show group when login is created within group
+        if ($request->has('group')) {
+            return redirect('/group/'.$request->group);
+        } else {
+            return redirect(RouteServiceProvider::PROFILE);
+        }
     }
 
     /**
@@ -72,13 +93,25 @@ class LoginsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Login $login)
+    public function edit(Request $request, Login $login)
     {
-        // Only the user that created the login can edit it
-        if (Auth::user()->id == $login->user_id) {
-            return view('editLogin', compact('login'));
+
+        // Only the user with the right permissions can edit it
+        if (Auth::user()->id == $login->user_id || ($request->has('group') && $request->group == $login->group_id)) {
+            // Determine if login is edited within group
+            $group = [];
+            if ($request->has('group')) {
+                $group = Group::find($request->group);
+            }
+
+            return view('editLogin', compact('login', 'group'));
         } else {
-            return redirect(RouteServiceProvider::PROFILE);
+            
+            if ($request->has('group')) {
+            return redirect('/group/'.$request->group);
+            } else {
+                return redirect(RouteServiceProvider::PROFILE);
+            }
         }
     }
 
@@ -96,7 +129,11 @@ class LoginsController extends Controller
         $login->password = encrypt($request->password);
         $login->save();
 
-        return redirect(RouteServiceProvider::PROFILE);
+        if ($request->has('group')) {
+            return redirect('/group/'.$request->group);
+        } else {
+            return redirect(RouteServiceProvider::PROFILE);
+        }
     }
 
     /**
@@ -112,6 +149,10 @@ class LoginsController extends Controller
             $login->delete();
         }
 
-        return redirect(RouteServiceProvider::PROFILE);
+        if ($request->has('group')) {
+            return redirect('/group/'.$request->group);
+        } else {
+            return redirect(RouteServiceProvider::PROFILE);
+        }
     }
 }

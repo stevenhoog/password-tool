@@ -47,7 +47,8 @@ class GroupsController extends Controller
     // Show login credentials of a group
     public function show(Group $group)
     {
-        //
+        $logins = $group->logins;
+        return view('showGroup', compact('logins', 'group'));
     }
 
     // Return view to edit a group

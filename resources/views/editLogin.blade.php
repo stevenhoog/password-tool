@@ -30,6 +30,9 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Edit Login</button>
+                        @if(!empty($group))
+                            <input type="hidden" name="group" value="{{ $group->id }}">
+                        @endif
                         {{ csrf_field() }}
                     </form>
                 </div>
