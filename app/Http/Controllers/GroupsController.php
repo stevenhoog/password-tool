@@ -19,8 +19,8 @@ class GroupsController extends Controller
 
     public function index()
     {
-        $groups = Auth::user()->groups;
-    	return view('welcome', compact('groups'));
+        $user = Auth::user();
+    	return view('welcome', compact('user'));
     }
 
     // Return view to add a new group
@@ -33,12 +33,21 @@ class GroupsController extends Controller
     public function store(Request $request)
     {
         // Create group in relation to the user model
-        $group = Auth::user()->groups()->create([
+        $user = Auth::user();
+
+        $group = $user->groups()->create([
             'name' => $request->name,
-            'description' => $request->description
+            'description' => $request->description,
+            'user_id' => $user->id
         ]);
 
     	return redirect(RouteServiceProvider::HOME);
+    }
+
+    // Show login credentials of a group
+    public function show(Group $group)
+    {
+        //
     }
 
     // Return view to edit a group
@@ -47,7 +56,7 @@ class GroupsController extends Controller
 
         // Only the user that created the group can edit it
         if (Auth::user()->id == $group->user_id) {
-            // Get a list of all of the application's users
+            // Get a list of all the application's users
             $users = User::all();
             return view('editGroup', compact('group', 'users'));
         } else {
@@ -67,12 +76,19 @@ class GroupsController extends Controller
         // Add group to user model
         if ($request->has('users')) {
 
-            foreach($request->users as $userSelect) {
-                // Retrieve user model by its primary key
-                $user = User::find($userSelect);
-                
-                $user->group = $group->id;
-                $user->save();
+            // Get a list of all the application's users
+            $users = User::all();
+
+            // Loop each user
+            foreach($users as $user) {
+
+                // Detach group to user, before attaching again
+                $user->groups()->detach($group->id);
+
+                if (in_array($user->id, $request->users)) {
+                    // Attach group to user that is selected
+                    $user->groups()->attach($group->id);
+                } 
             }
         }
         

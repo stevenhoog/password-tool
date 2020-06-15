@@ -12,7 +12,7 @@
                             <label for="users">Users added to this group</label>
                             <select name="users[]" class="form-control" multiple>
                                 @foreach($users as $user)
-                                <option value="{{ $user->id }}" {{ $user->group == $group->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                <option value="{{ $user->id }}" {{ $user->groups->contains($group->id) ? 'selected' : '' }}>{{ $user->name }}</option>
                                 @endforeach
                             </select>
                         </div>

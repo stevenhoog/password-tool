@@ -2,6 +2,7 @@
 
 namespace App;
 use App\User;
+use App\Login;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,10 +12,15 @@ class Group extends Model
     protected $table = 'groups';
 
     // The attributes that are mass assignable
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['user_id', 'name', 'description'];
 
     public function user() 
     {
-    	return $this->belongsTo(User::class);
+    	return $this->belongsToMany(User::class);
+    }
+
+    public function logins()
+    {
+    	return $this->hasMany(Login::class);
     }
 }
