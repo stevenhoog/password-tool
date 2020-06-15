@@ -9,7 +9,7 @@
                     <div class="card-body">
                         <a href="{{ route('group.create') }}" class="btn btn-primary">Add new Group</a>
 
-                        @if(!$groups->isEmpty())
+                        @if(!$user->groups->isEmpty())
                         <table class="table mt-4">
                              <thead>
                                 <tr>
@@ -17,13 +17,14 @@
                                 </tr>
                              </thead>
                              <tbody>
-                                @foreach($groups as $group)
+                                @foreach($user->groups as $group)
                                 <tr>
                                     <td>
                                         <h4>{{$group->name}}</h4>
                                         <span>{{$group->description}}</span>
                                     </td>
                                     <td class="align-middle">
+                                        @if($group->user_id == $user->id)
                                         <form action="/group/{{$group->id}}/edit" class="d-inline">
                                              <button type="submit" name="edit" title="Edit" class="btn btn-sm btn-outline-primary"><span class="fa fa-edit fa-lg" aria-hidden="true"></span></button>
                                             {{ csrf_field() }}
@@ -33,6 +34,7 @@
                                              <button type="submit" name="delete" title="Delete" class="btn btn-sm btn-outline-danger"><span class="fa fa-trash-o fa-lg" aria-hidden="true"></span></button>
                                             {{ csrf_field() }}
                                         </form>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
