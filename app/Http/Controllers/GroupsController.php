@@ -11,10 +11,13 @@ use App\User;
 class GroupsController extends Controller
 {
 
-    // Only authenticated users have access to the groups
     public function __construct()
     {
+        // Only authenticated users have access to the groups
         $this->middleware('auth');
+
+        // Check if user has permission to show the group
+        $this->middleware('groupPermissions')->only('show');
     }
 
     public function index()
@@ -46,11 +49,11 @@ class GroupsController extends Controller
 
     // Show login credentials of a group
     public function show(Request $request, Group $group)
-    {
+    {   
 
         // When searched for logins within group
         if ($request->has('search')) {
-            
+
             // Only return logins where title or username contains the search query
             $logins = $group->logins()->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%'.$request->search.'%')->orWhere('username', 'like', '%'.$request->search.'%');

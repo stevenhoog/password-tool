@@ -68,6 +68,8 @@
                                 @endforeach
                              </tbody>
                         </table>
+                        @else
+                        <p class="mt-4">No logins found</p>
                         @endif
                     </div>
             </div>
