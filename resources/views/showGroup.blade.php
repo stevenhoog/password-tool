@@ -6,7 +6,24 @@
             <div class="card">
                     <div class="card-header">{{ ucfirst($group->name) }} Logins</div>
                     <div class="card-body">
-                        <a href="{{ route('logins.create', ['group'=>$group->id]) }}" class="btn btn-primary">Add new Login</a>
+                      <div class="row">
+                        <div class="col-md-8">
+                          <a href="{{ route('logins.create', ['group'=>$group->id]) }}" class="btn btn-primary">Add new Login</a>
+                        </div>
+                        <div class="col-md-4">
+                          <form action="/group/{{ $group->id }}}" class="d-inline">
+                            <div class="input-group">
+                              <input type="text" name="search" placeholder="Search Logins" class="form-control">
+                              <div class="input-group-append">
+                                <div class="input-group-text p-0">
+                                  <button type="submit" class="btn btn-sm"><span class="fa fa-search" aria-hidden="true"></span></button>
+                                </div>
+                              </div>
+                            </div>
+                            {{ csrf_field() }}
+                          </form>
+                        </div>
+                      </div>
 
                         @if(!$logins->isEmpty())
                         <table class="table mt-4">

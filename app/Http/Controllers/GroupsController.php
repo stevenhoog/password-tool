@@ -45,9 +45,21 @@ class GroupsController extends Controller
     }
 
     // Show login credentials of a group
-    public function show(Group $group)
+    public function show(Request $request, Group $group)
     {
-        $logins = $group->logins;
+
+        // When searched for logins within group
+        if ($request->has('search')) {
+            
+            // Only return logins where title or username contains the search query
+            $logins = $group->logins()->where(function ($q) use ($request) {
+                $q->where('title', 'like', '%'.$request->search.'%')->orWhere('username', 'like', '%'.$request->search.'%');
+            })->get();
+
+        } else {
+            $logins = $group->logins;
+        }
+
         return view('showGroup', compact('logins', 'group'));
     }
 
